@@ -8,16 +8,16 @@ class Manip {
  
   getNotes() {
     return readFileAsync('db/db.json', 'utf8').then((notes) => {
-      let parsedNotes;
 
-      // If notes isn't an array or can't be turned into one, send back a new empty array
+      let parsed;
+      
       try {
-        parsedNotes = [].concat(JSON.parse(notes));
-      } catch (err) {
-        parsedNotes = [];
+        parsed = [].concat(JSON.parse(notes));
+      } catch{
+        parsed = [];// If notes is empty send back a new empty array
       }
-
-      return parsedNotes;
+      return parsed;
+      
     });
   }
 
@@ -46,7 +46,7 @@ class Manip {
       .then((notes) => notes.filter((note) => note.id !== id))
       .then((sievedNotes) => writeFileAsync('db/db.json', JSON.stringify(sievedNotes)));
   }
-  
+
 }
 
 module.exports = Manip;
